@@ -9,7 +9,7 @@ struct ItemDetailView: View {
     @State private var showingDeleteAlert = false
     
     var body: some View {
-        ScrollView {
+        ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
                 Group {
                     if let imageData = item.imageData, let uiImage = UIImage(data: imageData) {
@@ -82,33 +82,38 @@ struct ItemDetailView: View {
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
+        .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     Button("Edit") {
                         showingEditView = true
                     }
                     
-                    Button("Delete", role: .destructive) {
+                    Button(action: {
                         showingDeleteAlert = true
+                    }) {
+                        Text("Delete")
+                            .foregroundColor(.red)
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
                 }
             }
-        }
+        })
         .sheet(isPresented: $showingEditView) {
             EditItemView(item: item)
                 .environmentObject(dataManager)
         }
-        .alert("Delete Item", isPresented: $showingDeleteAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Delete", role: .destructive) {
-                dataManager.deleteItem(item)
-                presentationMode.wrappedValue.dismiss()
-            }
-        } message: {
-            Text("Are you sure you want to delete \"\(item.name)\" from the collection? This action cannot be undone.")
+        .alert(isPresented: $showingDeleteAlert) {
+            Alert(
+                title: Text("Delete Item"),
+                message: Text("Are you sure you want to delete \"\(item.name)\" from the collection? This action cannot be undone."),
+                primaryButton: Alert.Button.destructive(Text("Delete")) {
+                    dataManager.deleteItem(item)
+                    presentationMode.wrappedValue.dismiss()
+                },
+                secondaryButton: Alert.Button.cancel(Text("Cancel"))
+            )
         }
     }
 }

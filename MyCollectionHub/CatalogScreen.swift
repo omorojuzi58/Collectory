@@ -46,40 +46,59 @@ struct CatalogScreen: View {
                             message: "Try changing your search query"
                         )
                     } else {
-                        List {
-                            ForEach(Array(filteredAndSortedItems.enumerated()), id: \.element.id) { index, item in
-                                NavigationLink(destination: ItemDetailView(item: item)) {
-                                    CatalogItemRow(item: item)
+                        VStack(spacing: 0) {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(ThemeManager.secondaryText)
+                                TextField("Search by name", text: $searchText)
+                                    .textFieldStyle(PlainTextFieldStyle())
+                                if !searchText.isEmpty {
+                                    Button(action: {
+                                        searchText = ""
+                                    }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(ThemeManager.secondaryText)
+                                    }
                                 }
-                                .buttonStyle(PlainButtonStyle())
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
-                                .animatedCard()
                             }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Color(.systemBackground).opacity(0.8))
+                            .cornerRadius(10)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            
+                            List {
+                                ForEach(Array(filteredAndSortedItems.enumerated()), id: \.element.id) { index, item in
+                                    NavigationLink(destination: ItemDetailView(item: item)) {
+                                        CatalogItemRow(item: item)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .listRowBackground(Color.clear)
+                                    .animatedCard()
+                                }
+                            }
+                            .listStyle(PlainListStyle())
+                            .hideListSeparatorsAndBackground()
                         }
-                        .listStyle(PlainListStyle())
-                        .scrollContentBackground(.hidden)
                     }
                 }
             }
             .navigationTitle("Catalog")
             .navigationBarTitleDisplayMode(.large)
-            .searchable(text: $searchText, prompt: "Search by name")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Picker("Sort", selection: $sortOption) {
-                            ForEach(SortOption.allCases, id: \.self) { option in
-                                Text(option.rawValue).tag(option)
-                            }
+            .navigationBarItems(trailing:
+                Menu {
+                    Picker("Sort", selection: $sortOption) {
+                        ForEach(SortOption.allCases, id: \.self) { option in
+                            Text(option.rawValue).tag(option)
                         }
-                        .pickerStyle(MenuPickerStyle())
-                    } label: {
-                        Image(systemName: "arrow.up.arrow.down")
-                            .foregroundColor(ThemeManager.accentTeal)
                     }
+                    .pickerStyle(MenuPickerStyle())
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .foregroundColor(ThemeManager.accentTeal)
                 }
-            }
+            )
         }
     }
 }

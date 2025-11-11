@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 class ThemeManager: ObservableObject {
     static let shared = ThemeManager()
@@ -67,12 +68,12 @@ struct CardStyle: ViewModifier {
 
 struct GradientBackground: ViewModifier {
     func body(content: Content) -> some View {
-        content
-            .background(
-                ThemeManager.primaryGradient
-                    .opacity(0.1)
-                    .ignoresSafeArea()
-            )
+        ZStack {
+            ThemeManager.primaryGradient
+                .opacity(0.1)
+                .ignoresSafeArea()
+            content
+        }
     }
 }
 
@@ -104,6 +105,16 @@ struct HoverEffect: ViewModifier {
     }
 }
 
+struct ListStyleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                UITableView.appearance().separatorStyle = .none
+                UITableView.appearance().backgroundColor = .clear
+            }
+    }
+}
+
 
 extension View {
     func cardStyle() -> some View {
@@ -120,6 +131,10 @@ extension View {
     
     func hoverEffect() -> some View {
         modifier(HoverEffect())
+    }
+    
+    func hideListSeparatorsAndBackground() -> some View {
+        modifier(ListStyleModifier())
     }
 }
 

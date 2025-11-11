@@ -38,7 +38,7 @@ struct ProfileScreen: View {
                         }
                     }
                     .padding()
-                    .background(.ultraThinMaterial)
+                    .background(Color(.systemBackground).opacity(0.8))
                     .cornerRadius(16)
                     
                     VStack(alignment: .leading, spacing: 16) {
@@ -58,13 +58,13 @@ struct ProfileScreen: View {
                                     .foregroundColor(.secondary)
                             }
                             .padding()
-                            .background(.ultraThinMaterial)
+                            .background(Color(.systemBackground).opacity(0.8))
                             .cornerRadius(12)
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
                     .padding()
-                    .background(.ultraThinMaterial)
+                    .background(Color(.systemBackground).opacity(0.8))
                     .cornerRadius(16)
                     
                     VStack(alignment: .leading, spacing: 16) {
@@ -96,7 +96,7 @@ struct ProfileScreen: View {
                         }
                     }
                     .padding()
-                    .background(.ultraThinMaterial)
+                    .background(Color(.systemBackground).opacity(0.8))
                     .cornerRadius(16)
                 }
                 .padding()
@@ -110,10 +110,12 @@ struct ProfileScreen: View {
                     ShareSheet(activityItems: [exportData])
                 }
             }
-            .alert("Export", isPresented: $showingAlert) {
-                Button("OK") { }
-            } message: {
-                Text(alertMessage)
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("Export"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
             }
         }
     }

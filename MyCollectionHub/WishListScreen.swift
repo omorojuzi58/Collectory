@@ -15,13 +15,13 @@ struct WishListScreen: View {
             }
             .navigationTitle("Wish List")
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     GradientButton(title: "", icon: "plus") {
                         showingAddItem = true
                     }
                 }
-            }
+            })
             .sheet(isPresented: $showingAddItem) {
                 AddWishlistItemView()
                     .environmentObject(dataManager)
@@ -47,13 +47,12 @@ struct WishListScreen: View {
             ForEach(Array(dataManager.getWishlistItems().enumerated()), id: \.element.id) { index, item in
                 WishlistItemRow(item: item)
                     .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
                     .animatedCard()
             }
             .onDelete(perform: deleteItems)
         }
         .listStyle(PlainListStyle())
-        .scrollContentBackground(.hidden)
+        .hideListSeparatorsAndBackground()
     }
     
     private func deleteItems(offsets: IndexSet) {

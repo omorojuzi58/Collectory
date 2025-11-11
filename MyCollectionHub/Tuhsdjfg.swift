@@ -16,7 +16,7 @@ struct Tuhsdjfg: View {
 
                Nbvsdjhbv(gggsdhvc: $gfdshg) {
                    Bvgdcs(url: url, webViewStateModel: bbdsghjisddsiii)
-                       .background(Color.black.ignoresSafeArea())
+                       .background(Color.black)
                        .edgesIgnoringSafeArea(.bottom)
                        .onAppear{
                           
@@ -31,7 +31,10 @@ struct Tuhsdjfg: View {
                            
                            ZStack{
                                Nbvsdjhbv(gggsdhvc: $gfdshg) {
-                                   Bvgdcs(url:  URL(string: bbdsghjisddsiii.nnsadvb)!, webViewStateModel: bbdsghjisddsiii) .background(Color.black.ignoresSafeArea()).edgesIgnoringSafeArea(.bottom).onAppear{
+                                   Bvgdcs(url:  URL(string: bbdsghjisddsiii.nnsadvb)!, webViewStateModel: bbdsghjisddsiii)
+                                       .background(Color.black)
+                                       .edgesIgnoringSafeArea(.bottom)
+                                       .onAppear{
                                        
                                    }
                                }

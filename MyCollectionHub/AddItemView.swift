@@ -68,7 +68,7 @@ struct AddItemView: View {
             .navigationTitle("Add Item")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         presentationMode.wrappedValue.dismiss()
@@ -81,7 +81,7 @@ struct AddItemView: View {
                     }
                     .disabled(name.isEmpty || category.isEmpty)
                 }
-            }
+            })
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(selectedImage: $selectedImage)
             }

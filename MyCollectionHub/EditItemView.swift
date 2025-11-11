@@ -83,7 +83,7 @@ struct EditItemView: View {
             .navigationTitle("Edit")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         presentationMode.wrappedValue.dismiss()
@@ -96,7 +96,7 @@ struct EditItemView: View {
                     }
                     .disabled(name.isEmpty || category.isEmpty)
                 }
-            }
+            })
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(selectedImage: $selectedImage)
             }

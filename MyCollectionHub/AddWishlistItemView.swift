@@ -67,7 +67,7 @@ struct AddWishlistItemView: View {
             .navigationTitle("Add to Wish List")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         presentationMode.wrappedValue.dismiss()
@@ -80,7 +80,7 @@ struct AddWishlistItemView: View {
                     }
                     .disabled(name.isEmpty)
                 }
-            }
+            })
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(selectedImage: $selectedImage)
             }
